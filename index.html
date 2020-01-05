@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Game Template</title>
+    <style media="screen">
+      @font-face{
+        font-family: SpaceMono;
+        src: url("SpaceMono-Regular.ttf")
+      }
+      #gameContainer {
+        /* position: absolute; */
+      }
+      #gameCanvas {
+        /* border: 1px solid black; */
+      }
+      #colorContainer {
+        display: flex;
+      }
+      #gameAssets img {
+        display: none;
+      }
+      #metaInf {
+        display: block;
+      }
+    </style>
+    <script src="/js/index.js" charset="utf-8" type="module"></script>
+  </head>
+  <body>
+
+    <div id="gameContainer">
+      <canvas id="gameCanvas" style="width: 95vw; height: 95vw;"></canvas>
+    </div>
+
+    <div id="metaInf">
+      <div id="colorContainer"></div>
+      <div id="fpsContainer"></div>
+      <div id="gamePadStatesContainer"></div>
+    </div>
+    <div id="gameAssets">
+      <!-- <audio id="gameMusic" src=""></audio> -->
+      <img src="space-ship-console.png" alt="space ship console" id="console">
+    </div>
+  </body>
+</html>
