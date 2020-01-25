@@ -1,7 +1,7 @@
 import {GAMESTATE} from "/js/game.js";
 let gamepad;
 export default class InputHandler {
-  constructor(game){
+  constructor(game, canvas){
     this.inputStates = {}
     this.game = game
     document.addEventListener("keydown", event => {
@@ -67,7 +67,10 @@ export default class InputHandler {
 
       gamePadContainer.innerHTML = "Gamepad No. " + index + " has been disconnected.";
     })
-
+    document.addEventListener('mousemove', (event)=>{
+      this.inputStates.mouseX = event.clientX;
+      this.inputStates.mouseY = event.clientY
+    }, false);
   }
   checkAxes(){
     if(!gamepad) return;

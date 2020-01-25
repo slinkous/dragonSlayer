@@ -46,11 +46,17 @@ meta.append(fc)
 let canvas = document.querySelector("#gameCanvas");
 let ctx = canvas.getContext("2d");
 
+
+let aCtx = new window.AudioContext();
+
+
+
+
 const GAME_WIDTH = 512;
 const GAME_HEIGHT = 512;
 canvas.width = GAME_WIDTH;
 canvas.height = GAME_HEIGHT;
-let game = new Game(GAME_WIDTH, GAME_HEIGHT);
+let game = new Game(GAME_WIDTH, GAME_HEIGHT, canvas, aCtx);
 
 let lastCount = 0;
 let lastRedraw = 0;
