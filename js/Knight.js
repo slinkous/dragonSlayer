@@ -72,19 +72,6 @@ class Knight {
       this.movePath(path);
   }
 
-  movePath() {
-    if (this.num >= path.length) {
-      if (frameCount % 30 == 0) {
-        dragon.health--;
-      }
-      return;
-    }
-    let distx = path[this.num].x - this.x;
-    let disty = path[this.num].y - this.y;
-
-    let dx = min(this.speed, distx) * sign(distx);
-    let dy = min(this.speed, disty) * sign(disty);
-
   movePath(path) {
     let dx = path[this.num].x - this.x;
     let dy = path[this.num].y - this.y;

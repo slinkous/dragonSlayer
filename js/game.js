@@ -27,6 +27,7 @@ export class Game {
     this.shop = new Shop();
     this.shop.createItemsByLevel(1);
 
+    this.frameCount++;
     this.wave = new Wave();
     this.dragon = new Dragon();
 
@@ -53,13 +54,27 @@ export class Game {
 
       this.dragon.canShoot = false;
 
-      if(this.phaseTimer >= 10000){
+      if(this.phaseTimer >= 0){
         this.gamestate = GAMESTATE.WAVE;
         this.phaseTimer = 0;
       }
     }
     if (this.gamestate === GAMESTATE.WAVE) {
       this.dragon.update();
+      this.wave.knights = this.wave.knights.filter(k => !k.destroy);
+      this.dragon.flames = this.dragon.flames.filter(f => !f.destroy);
+
+      for (let k of this.wave.knights) {
+        for (let f of this.dragon.flames) {
+          if (f.destroy) {continue;}
+          let x = f.x - k.x;
+          let y = f.y - k.y;
+          if (x*x + y*y < 256) {
+            f.destroy = true;
+            k.destroy = true;
+          }
+        }
+      }
     }
   }
   draw(ctx, colorScheme, font, audioCtx){
@@ -76,6 +91,7 @@ export class Game {
       ctx.drawImage(this.background, 0, 0, this.gameWidth, this.gameHeight);
       this.shop.hideItems()
       this.dragon.canShoot = true;
+
       // draw the castle
       // move the knights
       // operate the dragon breath
