@@ -81,7 +81,7 @@ class Knight {
   }
 
   draw(ctx) {
-    ctx.drawImage(knightImage, this.x, this.y, 32, 32);
+    ctx.drawImage(knightImage, this.x - 16, this.y - 16, 32, 32);
   }
 
   update() {
