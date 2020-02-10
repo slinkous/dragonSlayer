@@ -23,8 +23,8 @@ export default class Dragon {
 
     canvas.addEventListener('mousedown', () => {
       let rect = canvas.getBoundingClientRect();
-      this.aimX = event.clientX - rect.left;
-      this.aimY = event.clientY - rect.top;
+      this.aimX = event.clientX - rect.left + 64;
+      this.aimY = event.clientY - rect.top + 48;
       this.shootFire();
     })
   }

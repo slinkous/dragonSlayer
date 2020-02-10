@@ -15,6 +15,6 @@ export default class Flame {
   }
 
   draw(ctx) {
-    ctx.drawImage(flameImage, this.x, this.y, 32, 32);
+    ctx.drawImage(flameImage, this.x - 16, this.y - 16, 32, 32);
   }
 }
