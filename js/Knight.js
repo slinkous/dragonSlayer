@@ -22,6 +22,7 @@ export default class Wave {
     this.level = 1;
     this.knights = [];
     this.createWave(this.level);
+
     this.timeSinceLastReleased = 0;
     this.knightIndex = 0;
   }
@@ -39,7 +40,7 @@ export default class Wave {
   }
   update(delta){
     this.timeSinceLastReleased += delta;
-
+    console.log(this.knights)
 
     if(this.timeSinceLastReleased > 1000 && this.knightIndex < this.knights.length){
       this.knights[this.knightIndex].released = true;
@@ -55,6 +56,7 @@ export default class Wave {
   draw(ctx){
     for(let i = 0; i < this.knights.length; i++){
       if(this.knights[i].released){
+        console.log(this.knights[i])
         this.knights[i].draw(ctx);
       }
     }
@@ -71,6 +73,7 @@ class Knight {
     this.speed = speed;
     this.released = false;
     this.destroy = false;
+    this.goldDamage = 1;
   }
 
   draw(ctx) {
@@ -82,14 +85,21 @@ class Knight {
   }
 
   movePath(path) {
+    if(this.x == path[path.length -1].x && this.y == path[path.length -1].y) return;
+    
     let dx = path[this.num].x - this.x;
     let dy = path[this.num].y - this.y;
+
+    if(dx < 1 && dy < 1 && this.num < path.length){
+      this.num += 1;
+    }
 
     if (dx > this.speed / 2) {
       this.x += Math.min(this.speed, dx) * Math.sign(dx);
     } else if (dy > this.speed / 2) {
       this.y += Math.min(this.speed, dy) * Math.sign(dy);
     }
+
   }
 }
 
