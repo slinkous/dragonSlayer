@@ -1,5 +1,5 @@
 import InputHandler from "./input.js";
-import Knight from "./Knight.js"
+// import Knight from "./Knight.js"
 import Shop from "./shop.js"
 
 export const GAMESTATE = {
