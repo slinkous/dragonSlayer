@@ -1,6 +1,6 @@
 let knightImage = document.querySelector("#knight");
 
-class Knight {
+export default class Knight {
   constructor(x, y, speed = 1) {
     this.x = x;
     this.y = y;
@@ -19,6 +19,12 @@ class Knight {
   }
 
   movePath() {
+    if (this.num >= path.length) {
+      if (frameCount % 30 == 0) {
+        dragon.health--;
+      }
+      return;
+    }
     let distx = path[this.num].x - this.x;
     let disty = path[this.num].y - this.y;
 
@@ -30,11 +36,13 @@ class Knight {
     } else if (disty > this.speed / 2 && placeFree(this.x, this.y + dy)) {
       this.y += dy;
     }
+
+    if (dist(0, 0, distx, disty) < 1) {
+      this.num++;
+    }
   }
 }
 
 function sign(num) {
   return (num == 0) ? 0 : ((num > 0) ? 1 : -1);
 }
-
-export default class Knight;
