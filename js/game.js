@@ -71,6 +71,7 @@ export class Game {
 
       if (this.dragon && this.wave.knights.length > 0) {
         for (let k of this.wave.knights) {
+          this.gold -= k.goldDamage;
           for (let f of this.dragon.flames) {
             if (f.destroy) {continue;}
             let x = f.x - k.x;

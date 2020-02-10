@@ -23,8 +23,8 @@ export default class Dragon {
 
     canvas.addEventListener('mousedown', () => {
       let rect = canvas.getBoundingClientRect();
-      this.aimX = event.clientX - rect.left + 64;
-      this.aimY = event.clientY - rect.top + 48;
+      this.aimX = event.clientX - rect.left;
+      this.aimY = event.clientY - rect.top;
       this.shootFire();
     })
   }
@@ -33,7 +33,7 @@ export default class Dragon {
     if (!this.canShoot) {return;}
     if (this.currentFlame >= this.flameCost) {
       let dir = Math.atan2(this.aimY - this.y, this.aimX - this.x);
-      this.flames.push(new Flame(this.x, this.y, dir));
+      this.flames.push(new Flame(this.x + 64, this.y + 48, dir));
       this.currentFlame -= this.flameCost;
     }
   }
