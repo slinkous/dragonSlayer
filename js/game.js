@@ -1,8 +1,10 @@
 import InputHandler from "./input.js";
+// import Knight from "./Knight.js"
 
 export const GAMESTATE = {
   PAUSED: 0,
-  RUNNING: 1,
+  WAVE: 1,
+  PREPARATION: 4,
   MENU: 2,
   GAMEOVER: 3
 }
@@ -12,25 +14,40 @@ export class Game {
     this.gameWidth = gameWidth;
     this.gameHeight = gameHeight;
     this.gamestate = GAMESTATE.MENU;
+    this.previousstate = GAMESTATE.MENU;
+    console.log(this.gamestate)
     // this.music = document.querySelector("#gameMusic");
     // this.music.loop = true;
     this.gameObjects = [];
     this.input = new InputHandler(this, canvas);
+    this.gold = 500;
+    this.phaseTimer = 0;
   }
 
   start(){
     if(this.gamestate !== GAMESTATE.MENU) return;
     this.gameObjects = [];
-    this.gamestate = GAMESTATE.RUNNING;
+    this.gamestate = GAMESTATE.PREPARATION;
     // this.music.play()
   }
   update(deltaTime){
+    console.log(this.gamestate)
     if(
       this.gamestate === GAMESTATE.PAUSED ||
       this.gamestate === GAMESTATE.MENU ||
       this.gamestate === GAMESTATE.GAMEOVER
-    ) return;
+    ){
+      return;
+    }
     this.input.update();
+    if(this.gamestate === GAMESTATE.PREPARATION){
+      this.phaseTimer += deltaTime;
+
+      if(this.phaseTimer >= 10000){
+        this.gamestate = GAMESTATE.WAVE;
+        this.phaseTimer = 0;
+      }
+    }
 
   }
   draw(ctx, colorScheme, font, audioCtx){
@@ -41,6 +58,22 @@ export class Game {
     ctx.restore();
     // this.player.draw(ctx)
 
+    if(this.gamestate === GAMESTATE.WAVE){
+      ctx.fillStyle = colorScheme[3]
+      ctx.fillRect(0, 0, this.gameWidth, this.gameHeight)
+      // draw the castle
+      // move the knights
+      // operate the dragon breath
+      // end phase at end of wave
+    }
+    if(this.gamestate === GAMESTATE.PREPARATION){
+      ctx.fillStyle = colorScheme[2]
+      ctx.fillRect(0, 0, this.gameWidth, this.gameHeight)
+      // draw the shop
+      // show gold in the hud
+      // count down a timer
+
+    }
     if(this.gamestate === GAMESTATE.PAUSED){
       ctx.rect(0, 0, this.gameWidth, this.gameHeight);
       ctx.fillStyle = "rgba(0,0,0,0.5)";
@@ -72,9 +105,10 @@ export class Game {
   }
   togglePause(){
     if(this.gamestate == GAMESTATE.PAUSED){
-      this.gamestate = GAMESTATE.RUNNING;
+      this.gamestate = this.previousstate;
       // this.music.play()
     } else {
+      this.previousstate = this.gamestate;
       this.gamestate = GAMESTATE.PAUSED;
       // this.music.pause()
     }
