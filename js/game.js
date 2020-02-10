@@ -1,6 +1,5 @@
-import InputHandler from "./input.js";
 import Wave from "./Knight.js"
-import Shop from "./shop.js"
+// import Shop from "./shop.js"
 import Dragon from "./Dragon.js"
 
 export const GAMESTATE = {
@@ -10,6 +9,9 @@ export const GAMESTATE = {
   MENU: 2,
   GAMEOVER: 3
 }
+
+let loseScreen = document.querySelector('#lose');
+let titleScreen = document.querySelector('#title');
 
 export class Game {
   constructor(gameWidth, gameHeight, canvas, aCtx){
@@ -21,15 +23,20 @@ export class Game {
     // this.music.loop = true;
     this.gameObjects = [];
     this.background = document.querySelector('#map')
-    this.input = new InputHandler(this, canvas);
-    this.gold = 5000;
+
+    this.gold = 1000;
     this.phaseTimer = 0;
-    this.shop = new Shop();
-    this.shop.createItemsByLevel(1);
+    // this.shop = new Shop();
+    // this.shop.createItemsByLevel(1);
 
     this.frameCount++;
     this.wave = new Wave();
     this.dragon = new Dragon();
+    this.knightsKilled = 0;
+    canvas.addEventListener("click", ()=>{
+      if(!(this.gamestate === GAMESTATE.MENU || this.gamestate == GAMESTATE.GAMEOVER)) return;
+      this.start();
+    });
 
   }
 
@@ -48,7 +55,6 @@ export class Game {
     ){
       return;
     }
-    this.input.update();
     if(this.gamestate === GAMESTATE.PREPARATION){
       this.phaseTimer += deltaTime;
 
@@ -62,7 +68,8 @@ export class Game {
     if (this.gamestate === GAMESTATE.WAVE) {
       this.dragon.update();
       this.wave.update(deltaTime);
-      this.wave.knights = this.wave.knights.filter(k => !k.destroy);
+      // this.wave.knights = this.wave.knights.filter(k => !k.destroy);
+      console.log(this.wave.knights.length)
       this.dragon.flames = this.dragon.flames.filter(f => !f.destroy);
 
       if (this.dragon.health <= 0) {
@@ -72,6 +79,7 @@ export class Game {
       if (this.dragon && this.wave.knights.length > 0) {
         for (let k of this.wave.knights) {
           this.gold -= k.goldDamage;
+          if(k.destroy) continue;
           for (let f of this.dragon.flames) {
             if (f.destroy) {continue;}
             let x = f.x - k.x;
@@ -79,13 +87,14 @@ export class Game {
             if (x*x + y*y < 256) {
               f.destroy = true;
               k.destroy = true;
+              this.knightsKilled += 1
             }
           }
         }
       }
     }
     if(this.gold < 0){
-      this.gamestate = GAMESTATE.LOSE
+      this.gamestate = GAMESTATE.GAMEOVER;
     }
   }
   draw(ctx, colorScheme, font, audioCtx){
@@ -100,7 +109,7 @@ export class Game {
       ctx.fillStyle = colorScheme[3];
       ctx.fillRect(0, 0, this.gameWidth, this.gameHeight);
       ctx.drawImage(this.background, 0, 0, this.gameWidth, this.gameHeight);
-      this.shop.hideItems()
+      // this.shop.hideItems()
 
       if (this.dragon) {
         this.dragon.canShoot = true;
@@ -116,7 +125,7 @@ export class Game {
       ctx.fillRect(0, 0, this.gameWidth, this.gameHeight)
       ctx.drawImage(this.background, 0, 0, this.gameWidth, this.gameHeight);
       // draw the shop
-      this.shop.draw(ctx, colorScheme, font, this.gameWidth, this.gameHeight)
+      // this.shop.draw(ctx, colorScheme, font, this.gameWidth, this.gameHeight)
       // show gold in the hud
       // count down a timer
       ctx.fillStyle = colorScheme[2];
@@ -151,20 +160,25 @@ export class Game {
     if(this.gamestate === GAMESTATE.MENU){
       ctx.fillStyle = colorScheme[1];
       ctx.fillRect(0, 0, this.gameWidth, this.gameHeight);
+      ctx.drawImage(title, 0, 0, this.gameWidth, this.gameHeight)
 
       ctx.font = "36px " + font;
       ctx.fillStyle = colorScheme[6];
       ctx.textAlign = "center";
-      ctx.fillText("Menu", this.gameWidth/2, this.gameHeight/2);
+      ctx.fillText("Dragon", this.gameWidth/2, 48);
+      ctx.fillText("Slayer     Slayer", this.gameWidth/2, 96);
     }
     if(this.gamestate === GAMESTATE.GAMEOVER){
       ctx.fillStyle = colorScheme[4];
       ctx.fillRect(0, 0, this.gameWidth, this.gameHeight);
-
-      ctx.font = "36px " + font;
-      ctx.fillStyle = colorScheme[5];
+      ctx.drawImage(lose, 0, 0, this.gameWidth, this.gameHeight)
+      ctx.font = "24px " + font;
+      ctx.fillStyle = colorScheme[7];
       ctx.textAlign = "center";
-      ctx.fillText("Game Over", this.gameWidth/2, this.gameHeight/2);
+      ctx.fillText("All your gold", this.gameWidth/4, 48);
+      ctx.fillText("was stolen!", this.gameWidth/4, 96);
+      ctx.fillText("But you killed ... ", 3*this.gameWidth/4, 120);
+      ctx.fillText(this.knightsKilled+ " knights!", 2*this.gameWidth/3, 180);
     }
   }
   togglePause(){

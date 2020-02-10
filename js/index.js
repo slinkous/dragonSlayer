@@ -12,7 +12,7 @@ const colorScheme = [
 ]
 
 //
-const font = "SpaceMono";
+const font = "Marcellus";
 
 let body = document.querySelector("body")
 body.style.backgroundColor = colorScheme[4];
