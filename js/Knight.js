@@ -6,14 +6,15 @@ const path = [
   {x: 438, y: 345},
   {x: 441, y: 280},
   {x: 375, y: 282},
-  {x: 441, y: 280},
-  {x: 429, y: 209},
+  {x: 375, y: 216},
+  {x: 444, y: 216},
+  {x: 430, y: 150},
   {x: 378, y: 127},
   {x: 107, y: 126},
   {x: 70, y: 157},
   {x: 81, y: 392},
   {x: 195, y: 400},
-  {x: 199, y: 314},
+  {x: 190, y: 278}
 ]
 
 export default class Wave {
@@ -27,7 +28,7 @@ export default class Wave {
   }
   createWave(level){
     let knightCount = 0;
-    let start = {x: 256, y: 400}
+    let start = {x: 256, y: 512}
 
     switch(level){
       case 1:
@@ -87,7 +88,6 @@ class Knight {
     let dx = path[this.num].x - this.x;
     let dy = path[this.num].y - this.y;
 
-console.log(dx)
     if(dx*dx + dy*dy < 1){
       this.num += 1;
     }

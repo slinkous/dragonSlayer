@@ -10,8 +10,8 @@ export default class Dragon {
     this.lastShot = 0;
     this.shootFrames = 6;
     this.flameCost = 5;
-    this.maxFlame = 100;
-    this.currentFlame = 100;
+    this.maxFlame = 15;
+    this.currentFlame = 15;
 
     this.health = 1000;
     this.maxHealth = 1000;
@@ -39,7 +39,7 @@ export default class Dragon {
   }
 
   update() {
-    this.currentFlame+=0.1;
+    this.currentFlame+=0.05;
     if (this.currentFlame > this.maxFlame) {
       this.currentFlame = this.maxFlame;
     }

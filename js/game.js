@@ -22,7 +22,7 @@ export class Game {
     this.gameObjects = [];
     this.background = document.querySelector('#map')
     this.input = new InputHandler(this, canvas);
-    this.gold = 500;
+    this.gold = 5000;
     this.phaseTimer = 0;
     this.shop = new Shop();
     this.shop.createItemsByLevel(1);
@@ -83,6 +83,9 @@ export class Game {
           }
         }
       }
+    }
+    if(this.gold < 0){
+      this.gamestate = GAMESTATE.LOSE
     }
   }
   draw(ctx, colorScheme, font, audioCtx){
