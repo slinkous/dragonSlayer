@@ -23,6 +23,7 @@ export default class Wave {
     this.knights = [];
     this.createWave(this.level);
     this.timeSinceLastReleased = 0;
+    this.knightIndex = 0;
   }
   createWave(level){
     let knightCount = 0;
@@ -38,6 +39,13 @@ export default class Wave {
   }
   update(delta){
     this.timeSinceLastReleased += delta;
+
+
+    if(this.timeSinceLastReleased > 1000 && this.knightIndex < this.knights.length){
+      this.knights[this.knightIndex].released = true;
+      this.timeSinceLastReleased = 0;
+      this.knightIndex ++
+    }
     for(let i = 0; i < this.knights.length; i++){
       if(this.knights[i].released){
         this.knights[i].update();
@@ -62,6 +70,7 @@ class Knight {
     this.num = 0;
     this.speed = speed;
     this.released = false;
+    this.destroy = false;
   }
 
   draw(ctx) {
