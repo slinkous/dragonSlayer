@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 class Knight {
+=======
+let knightImage = document.querySelector("#knight");
+
+export default class Knight {
+>>>>>>> e3323d9405cfa31b95aeee2bb4dd706522391c32
   constructor(x, y, speed = 1) {
     this.x = x;
     this.y = y;
