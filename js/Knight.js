@@ -27,15 +27,15 @@ export default class Wave {
     this.knightIndex = 0;
   }
   createWave(level){
-    let knightCount = 0;
+
     let start = {x: 256, y: 512}
 
-    switch(level){
-      case 1:
-        knightCount = 10;
-    }
+
+    let knightCount = 10*level;
+    let knightSpeed = 1 + level*0.2
+
     while(this.knights.length < knightCount){
-      this.knights.push(new Knight(start.x, start.y))
+      this.knights.push(new Knight(start.x, start.y, knightSpeed))
     }
   }
   update(delta){
@@ -57,6 +57,12 @@ export default class Wave {
       if(k.released){
         k.draw(ctx);
       }
+    }
+  }
+  checkIfTheyreDead(){
+    if(this.knights.length == 0){
+      this.level ++
+      this.createWave(level);
     }
   }
 }
