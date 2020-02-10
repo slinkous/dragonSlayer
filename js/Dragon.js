@@ -55,9 +55,9 @@ export default class Dragon {
       f.draw(ctx);
     }
     ctx.drawImage(dragonImage, this.x, this.y, 128, 96);
-    ctx.fillStyle = "black";
+    ctx.fillStyle = "#d77355";
     ctx.fillRect(10, 58, 32, 244);
-    ctx.fillStyle = "red";
+    ctx.fillStyle = "#e6c86e";
     ctx.fillRect(12, 60 + 240 - 240*this.currentFlame/this.maxFlame, 28, 240*this.currentFlame/this.maxFlame);
     ctx.restore();
   }
