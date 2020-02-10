@@ -1,4 +1,7 @@
 import InputHandler from "./input.js";
+import Knight from "./Knight.js"
+import Shop from "./shop.js"
+import Dragon from "./Dragon.js"
 
 export const GAMESTATE = {
   PAUSED: 0,

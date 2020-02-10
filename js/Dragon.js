@@ -1,3 +1,5 @@
+let dragonImage = document.querySelector("#dragon");
+
 export default class Dragon {
   constructor() {
     this.x = 250 - 128/2;
@@ -27,7 +29,7 @@ export default class Dragon {
   }
 
   draw(ctx) {
-    ctx.drawImage("dragonImage", this.x, this.y, 128, 96);
+    ctx.drawImage(dragonImage, this.x, this.y, 128, 96);
     ctx.fillStyle = "black";
     ctx.fillRect(10, 10, 32, 240);
     ctx.fillStyle = "red";
