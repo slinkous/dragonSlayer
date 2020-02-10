@@ -63,7 +63,8 @@ export class Game {
     if (this.gamestate === GAMESTATE.WAVE) {
       this.dragon.update();
       this.wave.update(deltaTime);
-      this.wave.knights = this.wave.knights.filter(k => !k.destroy);
+      // this.wave.knights = this.wave.knights.filter(k => !k.destroy);
+      console.log(this.wave.knights.length)
       this.dragon.flames = this.dragon.flames.filter(f => !f.destroy);
 
       if (this.dragon.health <= 0) {
@@ -73,6 +74,7 @@ export class Game {
       if (this.dragon && this.wave.knights.length > 0) {
         for (let k of this.wave.knights) {
           this.gold -= k.goldDamage;
+          if(k.destroy) continue;
           for (let f of this.dragon.flames) {
             if (f.destroy) {continue;}
             let x = f.x - k.x;

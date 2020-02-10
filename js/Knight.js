@@ -27,10 +27,8 @@ export default class Wave {
     this.knightIndex = 0;
   }
   createWave(level){
-
+    console.log("Creating new wave")
     let start = {x: 256, y: 512}
-
-
     let knightCount = 10*level;
     let knightSpeed = 1 + level*0.2
 
@@ -40,16 +38,24 @@ export default class Wave {
   }
   update(delta){
     this.timeSinceLastReleased += delta;
-
+    console.log(this.knightIndex)
     if(this.timeSinceLastReleased > 1000 && this.knightIndex < this.knights.length){
+      console.log("Getting released")
+      // console.log(this.knights[this.knightIndex])
       this.knights[this.knightIndex].released = true;
       this.timeSinceLastReleased = 0;
       this.knightIndex ++
     }
+
     for(let i = 0; i < this.knights.length; i++){
       if(this.knights[i].released){
         this.knights[i].update();
       }
+    }
+
+    if(this.theyreDead()){
+      this.level ++
+      this.createWave(this.level);
     }
   }
   draw(ctx){
@@ -59,11 +65,13 @@ export default class Wave {
       }
     }
   }
-  checkIfTheyreDead(){
-    if(this.knights.length == 0){
-      this.level ++
-      this.createWave(level);
+  theyreDead(){
+    // console.log(this.knights)
+    for(let i=0; i<this.knights.length; i++){
+      if(!this.knights[i].destroy) return false;
     }
+    return true;
+
   }
 }
 
@@ -81,10 +89,12 @@ class Knight {
   }
 
   draw(ctx) {
+    if(this.destroy) return;
     ctx.drawImage(knightImage, this.x - 16, this.y - 16, 32, 32);
   }
 
   update() {
+      if(this.destroy) return;
       this.movePath(path);
   }
 
