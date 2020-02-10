@@ -20,10 +20,7 @@ const colorScheme = [
 ]
 
 //
-
-
 const font = "SpaceMono";
-
 
 let body = document.querySelector("body")
 body.style.backgroundColor = colorScheme[4];
@@ -46,11 +43,7 @@ meta.append(fc)
 let canvas = document.querySelector("#gameCanvas");
 let ctx = canvas.getContext("2d");
 
-
 let aCtx = new window.AudioContext();
-
-
-
 
 const GAME_WIDTH = 512;
 const GAME_HEIGHT = 512;

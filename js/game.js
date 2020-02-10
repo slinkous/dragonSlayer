@@ -1,6 +1,5 @@
 import InputHandler from "./input.js";
 
-
 export const GAMESTATE = {
   PAUSED: 0,
   RUNNING: 1,
@@ -17,14 +16,12 @@ export class Game {
     // this.music.loop = true;
     this.gameObjects = [];
     this.input = new InputHandler(this, canvas);
-
   }
 
   start(){
     if(this.gamestate !== GAMESTATE.MENU) return;
     this.gameObjects = [];
     this.gamestate = GAMESTATE.RUNNING;
-
     // this.music.play()
   }
   update(deltaTime){
@@ -37,7 +34,6 @@ export class Game {
 
   }
   draw(ctx, colorScheme, font, audioCtx){
-
     ctx.save();
     ctx.fillStyle = colorScheme[0];
     ctx.fillRect(0, 0, this.gameWidth, this.gameHeight);
@@ -83,5 +79,4 @@ export class Game {
       // this.music.pause()
     }
   }
-
 }

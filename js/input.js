@@ -5,7 +5,7 @@ export default class InputHandler {
     this.inputStates = {}
     this.game = game
     document.addEventListener("keydown", event => {
-      event.preventDefault();
+      //event.preventDefault();
       switch(event.keyCode){
         case 37:
           this.inputStates["left"] = true;
@@ -25,12 +25,10 @@ export default class InputHandler {
         case 13:
           this.inputStates["enter"] = true;
           if(game.gamestate == GAMESTATE.MENU){
-            canvas.requestFullscreen();
             game.start();
           }
           break;
       }
-
     });
     document.addEventListener("keyup", event => {
       // event.preventDefault();
