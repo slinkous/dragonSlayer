@@ -14,7 +14,6 @@ const path = [
   {x: 81, y: 392},
   {x: 195, y: 400},
   {x: 199, y: 314},
-
 ]
 
 export default class Wave {
@@ -28,7 +27,7 @@ export default class Wave {
   }
   createWave(level){
     let knightCount = 0;
-    let start = {x: 256, y: 512}
+    let start = {x: 256, y: 400}
 
     switch(level){
       case 1:
@@ -40,7 +39,6 @@ export default class Wave {
   }
   update(delta){
     this.timeSinceLastReleased += delta;
-    console.log(this.knights)
 
     if(this.timeSinceLastReleased > 1000 && this.knightIndex < this.knights.length){
       this.knights[this.knightIndex].released = true;
@@ -54,10 +52,9 @@ export default class Wave {
     }
   }
   draw(ctx){
-    for(let i = 0; i < this.knights.length; i++){
-      if(this.knights[i].released){
-        console.log(this.knights[i])
-        this.knights[i].draw(ctx);
+    for(let k of this.knights){
+      if(k.released){
+        k.draw(ctx);
       }
     }
   }
@@ -73,7 +70,7 @@ class Knight {
     this.speed = speed;
     this.released = false;
     this.destroy = false;
-    this.goldDamage = 1;
+    this.goldDamage = 0;
   }
 
   draw(ctx) {
@@ -85,19 +82,20 @@ class Knight {
   }
 
   movePath(path) {
-    if(this.x == path[path.length -1].x && this.y == path[path.length -1].y) return;
-    
+    if (this.num >= path.length) {this.goldDamage = 1; return;}
+
     let dx = path[this.num].x - this.x;
     let dy = path[this.num].y - this.y;
 
-    if(dx < 1 && dy < 1 && this.num < path.length){
+console.log(dx)
+    if(dx*dx + dy*dy < 1){
       this.num += 1;
     }
 
-    if (dx > this.speed / 2) {
-      this.x += Math.min(this.speed, dx) * Math.sign(dx);
-    } else if (dy > this.speed / 2) {
-      this.y += Math.min(this.speed, dy) * Math.sign(dy);
+    if (Math.abs(dx) > this.speed / 2) {
+      this.x += Math.min(this.speed, Math.abs(dx)) * Math.sign(dx);
+    } else if (Math.abs(dy) > this.speed / 2) {
+      this.y += Math.min(this.speed, Math.abs(dy)) * Math.sign(dy);
     }
 
   }
