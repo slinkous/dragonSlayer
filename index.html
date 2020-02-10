@@ -13,7 +13,7 @@
       }
       #gameCanvas {
         /* border: 1px solid black; */
-        cursor:none;
+        /* cursor:none; */
       }
       #colorContainer {
         display: flex;
@@ -26,6 +26,7 @@
       }
     </style>
     <script src="/js/index.js" charset="utf-8" type="module"></script>
+
   </head>
   <body>
 
@@ -46,5 +47,12 @@
       <img src="knight.png" id="knight">
       <img src="map.png" id="map">
     </div>
+
+    <script>
+      let canvas = document.querySelector("#gameCanvas");
+      canvas.addEventListener('mousedown', function(event){
+        console.log("{x: " + (event.clientX -canvas.offsetLeft) + ", y: " + (event.clientY -canvas.offsetTop)+"}" )
+      })
+    </script>
   </body>
 </html>

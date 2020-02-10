@@ -1,5 +1,5 @@
 import InputHandler from "./input.js";
-import Knight from "./Knight.js"
+import Wave from "./Knight.js"
 import Shop from "./shop.js"
 
 export const GAMESTATE = {
@@ -25,6 +25,7 @@ export class Game {
     this.phaseTimer = 0;
     this.shop = new Shop();
     this.shop.createItemsByLevel(1);
+    this.wave = new Wave();
   }
 
   start(){
