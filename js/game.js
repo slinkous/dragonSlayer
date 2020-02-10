@@ -1,5 +1,6 @@
 import InputHandler from "./input.js";
-// import Knight from "./Knight.js"
+import Knight from "./Knight.js"
+import Shop from "./shop.js"
 
 export const GAMESTATE = {
   PAUSED: 0,
@@ -22,6 +23,8 @@ export class Game {
     this.input = new InputHandler(this, canvas);
     this.gold = 500;
     this.phaseTimer = 0;
+    this.shop = new Shop();
+    this.shop.createItemsByLevel(1);
   }
 
   start(){
@@ -61,6 +64,7 @@ export class Game {
     if(this.gamestate === GAMESTATE.WAVE){
       ctx.fillStyle = colorScheme[3]
       ctx.fillRect(0, 0, this.gameWidth, this.gameHeight)
+      this.shop.hideItems()
       // draw the castle
       // move the knights
       // operate the dragon breath
@@ -70,6 +74,7 @@ export class Game {
       ctx.fillStyle = colorScheme[2]
       ctx.fillRect(0, 0, this.gameWidth, this.gameHeight)
       // draw the shop
+      this.shop.draw(ctx, colorScheme, font, this.gameWidth, this.gameHeight)
       // show gold in the hud
       // count down a timer
 
