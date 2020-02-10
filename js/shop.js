@@ -40,12 +40,12 @@ class Item{
     this.price = price;
     this.desc = desc;
 
-    let itemDiv = document.createElement("DIV");
-    itemDiv.innerHTML = `<p> ${this.name} </p>`;
-    let button = document.createElement("BUTTON")
-    button.innerHTML = this.price + " gold"
-    itemDiv.append(button);
-    shopContainer.append(itemDiv)
+    this.div = document.createElement("DIV");
+    this.div.innerHTML = `<p> ${this.name} </p>`;
+    this.button = document.createElement("BUTTON")
+    this.button.innerHTML = this.price + " gold"
+    this.div.append(this.button);
+    shopContainer.append(this.div)
 
   }
   draw(ctx, x, y, colors, font){
@@ -55,6 +55,9 @@ class Item{
     // ctx.font = "12px " + font
     // ctx.fillText(this.name, x+32, y+32);
     // ctx.fillText(this.price + " gold", x+32, y+48)
+
+  }
+  buy() {
 
   }
 }

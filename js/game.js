@@ -1,5 +1,5 @@
 import InputHandler from "./input.js";
-import Knight from "./Knight.js"
+import Wave from "./Knight.js"
 import Shop from "./shop.js"
 import Dragon from "./Dragon.js"
 
@@ -27,7 +27,9 @@ export class Game {
     this.shop = new Shop();
     this.shop.createItemsByLevel(1);
 
+    this.wave = new Wave();
     this.dragon = new Dragon();
+
   }
 
   start(){

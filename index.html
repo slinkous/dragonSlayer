@@ -13,7 +13,11 @@
       }
       #gameCanvas {
         /* border: 1px solid black; */
+<<<<<<< HEAD
+        /* cursor:none; */
+=======
         cursor:crosshair;
+>>>>>>> 61f6a23cb5bc3cb8c6bbfe42e3bcc45750f371b4
       }
       #colorContainer {
         display: flex;
@@ -26,6 +30,7 @@
       }
     </style>
     <script src="/js/index.js" charset="utf-8" type="module"></script>
+
   </head>
   <body>
 
@@ -48,5 +53,12 @@
       <img src="dragon.png" id="dragon">
       <img src="flame.png" id="flame">
     </div>
+
+    <script>
+      let canvas = document.querySelector("#gameCanvas");
+      canvas.addEventListener('mousedown', function(event){
+        console.log("{x: " + (event.clientX -canvas.offsetLeft) + ", y: " + (event.clientY -canvas.offsetTop)+"}" )
+      })
+    </script>
   </body>
 </html>
