@@ -1,4 +1,7 @@
 let dragonImage = document.querySelector("#dragon");
+let canvas = document.querySelector("#gameCanvas");
+
+import Flame from "./Flame.js";
 
 export default class Dragon {
   constructor() {
@@ -12,27 +15,50 @@ export default class Dragon {
 
     this.health = 1000;
     this.maxHealth = 1000;
+
+    this.canShoot = false;
+    this.flames = [];
+    this.aimX = 0;
+    this.aimY = 0;
+
+    canvas.addEventListener('mousedown', () => {
+      let rect = canvas.getBoundingClientRect();
+      this.aimX = event.clientX - rect.left;
+      this.aimY = event.clientY - rect.top;
+      this.shootFire();
+    })
   }
 
   shootFire() {
-    if (this.currentFlame < this.flameCost && frameCount - this.lastShot > this.shootFrames) {
-      flames.push(new Flame(this.x, this.y));
-      this.currentFlame -= flameCost;
+    if (!this.canShoot) {return;}
+    if (this.currentFlame >= this.flameCost) {
+      let dir = Math.atan2(this.aimY - this.y, this.aimX - this.x);
+      this.flames.push(new Flame(this.x, this.y, dir));
+      this.currentFlame -= this.flameCost;
     }
   }
 
   update() {
-    this.currentFlame++;
+    this.currentFlame+=0.1;
     if (this.currentFlame > this.maxFlame) {
       this.currentFlame = this.maxFlame;
+    }
+
+    for (let f of this.flames) {
+      f.update();
     }
   }
 
   draw(ctx) {
+    ctx.save();
+    for (let f of this.flames) {
+      f.draw(ctx);
+    }
     ctx.drawImage(dragonImage, this.x, this.y, 128, 96);
     ctx.fillStyle = "black";
-    ctx.fillRect(10, 10, 32, 240);
+    ctx.fillRect(10, 58, 32, 244);
     ctx.fillStyle = "red";
-    ctx.fillRect(10, 240 - 240*this.currentFlame/this.maxFlame, 32, 240);
+    ctx.fillRect(12, 60 + 240 - 240*this.currentFlame/this.maxFlame, 28, 240*this.currentFlame/this.maxFlame);
+    ctx.restore();
   }
 }
