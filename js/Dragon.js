@@ -32,7 +32,7 @@ export default class Dragon {
   shootFire() {
     if (!this.canShoot) {return;}
     if (this.currentFlame >= this.flameCost) {
-      let dir = Math.atan2(this.aimY - this.y - 64, this.aimX - this.x - 48);
+      let dir = Math.atan2(this.aimY - this.y - 48, this.aimX - this.x - 64);
       this.flames.push(new Flame(this.x + 64, this.y + 48, dir));
       this.currentFlame -= this.flameCost;
     }
