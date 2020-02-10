@@ -1,6 +1,6 @@
 let knightImage = document.querySelector("#knight");
 
-class Knight {
+export default class Knight {
   constructor(x, y, speed = 1) {
     this.x = x;
     this.y = y;
@@ -36,5 +36,3 @@ class Knight {
 function sign(num) {
   return (num == 0) ? 0 : ((num > 0) ? 1 : -1);
 }
-
-export default class Knight;
