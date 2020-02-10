@@ -16,10 +16,10 @@ export class Game {
     this.gameHeight = gameHeight;
     this.gamestate = GAMESTATE.MENU;
     this.previousstate = GAMESTATE.MENU;
-    console.log(this.gamestate)
     // this.music = document.querySelector("#gameMusic");
     // this.music.loop = true;
     this.gameObjects = [];
+    this.background = document.querySelector('#map')
     this.input = new InputHandler(this, canvas);
     this.gold = 500;
     this.phaseTimer = 0;
@@ -62,8 +62,9 @@ export class Game {
     // this.player.draw(ctx)
 
     if(this.gamestate === GAMESTATE.WAVE){
-      ctx.fillStyle = colorScheme[3]
-      ctx.fillRect(0, 0, this.gameWidth, this.gameHeight)
+      ctx.fillStyle = colorScheme[3];
+      ctx.fillRect(0, 0, this.gameWidth, this.gameHeight);
+      ctx.drawImage(this.background, 0, 0, this.gameWidth, this.gameHeight);
       this.shop.hideItems()
       // draw the castle
       // move the knights
@@ -73,18 +74,34 @@ export class Game {
     if(this.gamestate === GAMESTATE.PREPARATION){
       ctx.fillStyle = colorScheme[2]
       ctx.fillRect(0, 0, this.gameWidth, this.gameHeight)
+      ctx.drawImage(this.background, 0, 0, this.gameWidth, this.gameHeight);
       // draw the shop
       this.shop.draw(ctx, colorScheme, font, this.gameWidth, this.gameHeight)
       // show gold in the hud
       // count down a timer
+      ctx.fillStyle = colorScheme[2];
+      ctx.fillRect(this.gameWidth - 300, 10, 300, 36);
+      ctx.font = "24px " + font;
+      ctx.fillStyle = colorScheme[5]
+      ctx.fillText("Time Left: " + Math.floor(30 - this.phaseTimer/1000), this.gameWidth - 144, 36);
 
+
+
+    }
+    if(this.gamestate === GAMESTATE.WAVE || this.gamestate === GAMESTATE.PREPARATION){
+      // display gold???
+      ctx.fillStyle = colorScheme[2];
+      ctx.fillRect(3, 10, 144, 36);
+      ctx.font = "24px " + font;
+      ctx.fillStyle = colorScheme[6]
+      ctx.fillText("Gold: " + this.gold, 72, 36);
     }
     if(this.gamestate === GAMESTATE.PAUSED){
       ctx.rect(0, 0, this.gameWidth, this.gameHeight);
       ctx.fillStyle = "rgba(0,0,0,0.5)";
       ctx.fill();
 
-      ctx.font = "3em " + font;
+      ctx.font = "36px " + font;
       ctx.fillStyle = colorScheme[4];
       ctx.textAlign = "center";
       ctx.fillText("Paused", this.gameWidth/2, this.gameHeight/2);
@@ -93,7 +110,7 @@ export class Game {
       ctx.fillStyle = colorScheme[1];
       ctx.fillRect(0, 0, this.gameWidth, this.gameHeight);
 
-      ctx.font = "3em " + font;
+      ctx.font = "36px " + font;
       ctx.fillStyle = colorScheme[6];
       ctx.textAlign = "center";
       ctx.fillText("Menu", this.gameWidth/2, this.gameHeight/2);
@@ -102,7 +119,7 @@ export class Game {
       ctx.fillStyle = colorScheme[4];
       ctx.fillRect(0, 0, this.gameWidth, this.gameHeight);
 
-      ctx.font = "3em " + font;
+      ctx.font = "36px " + font;
       ctx.fillStyle = colorScheme[5];
       ctx.textAlign = "center";
       ctx.fillText("Game Over", this.gameWidth/2, this.gameHeight/2);
