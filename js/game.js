@@ -61,6 +61,7 @@ export class Game {
     }
     if (this.gamestate === GAMESTATE.WAVE) {
       this.dragon.update();
+      this.wave.update();
       this.wave.knights = this.wave.knights.filter(k => !k.destroy);
       this.dragon.flames = this.dragon.flames.filter(f => !f.destroy);
 
@@ -81,7 +82,6 @@ export class Game {
           }
         }
       }
-
     }
   }
   draw(ctx, colorScheme, font, audioCtx){
@@ -100,6 +100,7 @@ export class Game {
       if (this.dragon) {
         this.dragon.canShoot = true;
       }
+      this.wave.draw();
 
       // draw the castle
       // move the knights
