@@ -25,6 +25,7 @@ export default class InputHandler {
         case 13:
           this.inputStates["enter"] = true;
           if(game.gamestate == GAMESTATE.MENU){
+            canvas.requestFullscreen();
             game.start();
           }
           break;
