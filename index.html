@@ -2,22 +2,24 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Game Template</title>
+    <title>Dragon Slayer Slayer</title>
+    <link href="'https://fonts.googleapis.com/css?family=Marcellus&display=swap'" rel="stylesheet">
     <style media="screen">
       @font-face{
-        font-family: SpaceMono;
-        src: url("SpaceMono-Regular.ttf")
+        font-family: Marcellus;
+        src: url('Marcellus-Regular.ttf')
       }
       #gameContainer {
-        /* position: absolute; */
+        width: 100%;
+        text-align: center;
       }
       #gameCanvas {
         /* border: 1px solid black; */
-<<<<<<< HEAD
         /* cursor:none; */
-=======
+        width: 512px;
+        margin: auto 0;
         cursor:crosshair;
->>>>>>> 61f6a23cb5bc3cb8c6bbfe42e3bcc45750f371b4
+
       }
       #colorContainer {
         display: flex;
@@ -26,10 +28,11 @@
         display: none;
       }
       #metaInf {
-        display: block;
+        display: none;
       }
     </style>
     <script src="/js/index.js" charset="utf-8" type="module"></script>
+
 
   </head>
   <body>
@@ -52,13 +55,9 @@
       <img src="map.png" id="map">
       <img src="dragon.png" id="dragon">
       <img src="flame.png" id="flame">
+      <img src="loseScreen.png" id="lose">
+      <img src="titleScreen.png" id="title">
     </div>
 
-    <!-- <script>
-      let canvas = document.querySelector("#gameCanvas");
-      canvas.addEventListener('mousedown', function(event){
-        console.log("{x: " + (event.clientX -canvas.offsetLeft) + ", y: " + (event.clientY -canvas.offsetTop)+"}" )
-      })
-    </script> -->
   </body>
 </html>
