@@ -61,9 +61,9 @@ export class Game {
     }
     if (this.gamestate === GAMESTATE.WAVE) {
       this.dragon.update();
-<<<<<<< HEAD
+
       this.wave.update();
-=======
+
       this.wave.knights = this.wave.knights.filter(k => !k.destroy);
       this.dragon.flames = this.dragon.flames.filter(f => !f.destroy);
 
@@ -78,7 +78,7 @@ export class Game {
           }
         }
       }
->>>>>>> f24196d5c03dec0bb7738f1181148ae15c974f4c
+
     }
   }
   draw(ctx, colorScheme, font, audioCtx){
@@ -95,11 +95,7 @@ export class Game {
       ctx.drawImage(this.background, 0, 0, this.gameWidth, this.gameHeight);
       this.shop.hideItems()
       this.dragon.canShoot = true;
-<<<<<<< HEAD
       this.wave.draw();
-=======
-
->>>>>>> f24196d5c03dec0bb7738f1181148ae15c974f4c
       // draw the castle
       // move the knights
       // operate the dragon breath
