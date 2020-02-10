@@ -22,7 +22,7 @@ export class Game {
     this.gameObjects = [];
     this.background = document.querySelector('#map')
     this.input = new InputHandler(this, canvas);
-    this.gold = 5000;
+    this.gold = 1000;
     this.phaseTimer = 0;
     this.shop = new Shop();
     this.shop.createItemsByLevel(1);
@@ -30,6 +30,7 @@ export class Game {
     this.frameCount++;
     this.wave = new Wave();
     this.dragon = new Dragon();
+    this.knightsKilled = 0;
 
   }
 
@@ -79,13 +80,14 @@ export class Game {
             if (x*x + y*y < 256) {
               f.destroy = true;
               k.destroy = true;
+              this.knightsKilled += 1
             }
           }
         }
       }
     }
     if(this.gold < 0){
-      this.gamestate = GAMESTATE.LOSE
+      this.gamestate = GAMESTATE.GAMEOVER;
     }
   }
   draw(ctx, colorScheme, font, audioCtx){
@@ -164,7 +166,10 @@ export class Game {
       ctx.font = "36px " + font;
       ctx.fillStyle = colorScheme[5];
       ctx.textAlign = "center";
-      ctx.fillText("Game Over", this.gameWidth/2, this.gameHeight/2);
+        ctx.fillText("All your gold", this.gameWidth/2, this.gameHeight/2 - 48);
+      ctx.fillText("was stolen!", this.gameWidth/2, this.gameHeight/2);
+      ctx.fillText("But you killed ... ", this.gameWidth/2, this.gameHeight/2 + 48);
+          ctx.fillText(this.knightsKilled+ " knights!", this.gameWidth/2, this.gameHeight/2 + 96);
     }
   }
   togglePause(){
