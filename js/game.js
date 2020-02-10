@@ -64,17 +64,24 @@ export class Game {
       this.wave.knights = this.wave.knights.filter(k => !k.destroy);
       this.dragon.flames = this.dragon.flames.filter(f => !f.destroy);
 
-      for (let k of this.wave.knights) {
-        for (let f of this.dragon.flames) {
-          if (f.destroy) {continue;}
-          let x = f.x - k.x;
-          let y = f.y - k.y;
-          if (x*x + y*y < 256) {
-            f.destroy = true;
-            k.destroy = true;
+      if (this.dragon.health <= 0) {
+        this.dragon = null;
+      }
+
+      if (this.dragon && this.wave.knights.length > 0) {
+        for (let k of this.wave.knights) {
+          for (let f of this.dragon.flames) {
+            if (f.destroy) {continue;}
+            let x = f.x - k.x;
+            let y = f.y - k.y;
+            if (x*x + y*y < 256) {
+              f.destroy = true;
+              k.destroy = true;
+            }
           }
         }
       }
+
     }
   }
   draw(ctx, colorScheme, font, audioCtx){
@@ -90,7 +97,9 @@ export class Game {
       ctx.fillRect(0, 0, this.gameWidth, this.gameHeight);
       ctx.drawImage(this.background, 0, 0, this.gameWidth, this.gameHeight);
       this.shop.hideItems()
-      this.dragon.canShoot = true;
+      if (this.dragon) {
+        this.dragon.canShoot = true;
+      }
 
       // draw the castle
       // move the knights
