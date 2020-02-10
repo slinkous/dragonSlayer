@@ -1,5 +1,5 @@
 var path = [];
-class PathNode {
+export default class PathNode {
   constructor(x, y) {
     this.x = x;
     this.y = y;

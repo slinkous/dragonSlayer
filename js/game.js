@@ -1,6 +1,7 @@
 import InputHandler from "./input.js";
 import Wave from "./Knight.js"
 import Shop from "./shop.js"
+import Dragon from "./Dragon.js"
 
 export const GAMESTATE = {
   PAUSED: 0,
@@ -25,7 +26,10 @@ export class Game {
     this.phaseTimer = 0;
     this.shop = new Shop();
     this.shop.createItemsByLevel(1);
+
     this.wave = new Wave();
+    this.dragon = new Dragon();
+
   }
 
   start(){
@@ -35,7 +39,7 @@ export class Game {
     // this.music.play()
   }
   update(deltaTime){
-    console.log(this.gamestate)
+    this.frameCount++;
     if(
       this.gamestate === GAMESTATE.PAUSED ||
       this.gamestate === GAMESTATE.MENU ||
@@ -47,12 +51,16 @@ export class Game {
     if(this.gamestate === GAMESTATE.PREPARATION){
       this.phaseTimer += deltaTime;
 
+      this.dragon.canShoot = false;
+
       if(this.phaseTimer >= 10000){
         this.gamestate = GAMESTATE.WAVE;
         this.phaseTimer = 0;
       }
     }
-
+    if (this.gamestate === GAMESTATE.WAVE) {
+      this.dragon.update();
+    }
   }
   draw(ctx, colorScheme, font, audioCtx){
     ctx.save();
@@ -67,6 +75,7 @@ export class Game {
       ctx.fillRect(0, 0, this.gameWidth, this.gameHeight);
       ctx.drawImage(this.background, 0, 0, this.gameWidth, this.gameHeight);
       this.shop.hideItems()
+      this.dragon.canShoot = true;
       // draw the castle
       // move the knights
       // operate the dragon breath
@@ -88,6 +97,7 @@ export class Game {
 
 
 
+
     }
     if(this.gamestate === GAMESTATE.WAVE || this.gamestate === GAMESTATE.PREPARATION){
       // display gold???
@@ -95,6 +105,7 @@ export class Game {
       ctx.fillRect(3, 10, 144, 36);
       ctx.font = "24px " + font;
       ctx.fillStyle = colorScheme[6]
+      this.dragon.draw(ctx);
       ctx.fillText("Gold: " + this.gold, 72, 36);
     }
     if(this.gamestate === GAMESTATE.PAUSED){
