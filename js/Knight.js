@@ -28,7 +28,7 @@ export default class Wave {
   }
   createWave(level){
     let knightCount = 0;
-    let start = {x: 256, y: 512}
+    let start = {x: 256, y: 400}
 
     switch(level){
       case 1:
@@ -40,7 +40,6 @@ export default class Wave {
   }
   update(delta){
     this.timeSinceLastReleased += delta;
-    console.log(this.knights)
 
     if(this.timeSinceLastReleased > 1000 && this.knightIndex < this.knights.length){
       this.knights[this.knightIndex].released = true;
@@ -85,8 +84,9 @@ class Knight {
   }
 
   movePath(path) {
-    if(this.x == path[path.length -1].x && this.y == path[path.length -1].y) return;
-    
+
+    if(this.num >= path.length) return;
+
     let dx = path[this.num].x - this.x;
     let dy = path[this.num].y - this.y;
 
