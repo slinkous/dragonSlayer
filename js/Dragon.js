@@ -1,4 +1,4 @@
-class Dragon {
+export default class Dragon {
   constructor() {
     this.x = 250 - 128/2;
     this.y = 250 - 96/2;
